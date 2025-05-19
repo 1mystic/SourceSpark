@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- **** REPLACE THIS WITH THE ACTUAL PAGE TITLE **** -->
+    <title>Explore [Page Content] - SourceSpark</title>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- **IMPORTANT: Add Font Awesome Kit URL here from your landing page** -->
+    <script src="https://kit.fontawesome.com/YOUR_KIT_CODE.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css"> <!-- Re-use landing page CSS -->
+    <link rel="stylesheet" href="explore-style.css"> <!-- Specific styles for this page -->
+</head>
+<body>
+    <!-- Navbar (Same as landing page) -->
+    <header class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo"> <!-- Link to landing page -->
+                <svg width="36" height="36" viewBox="0 0 100 100" class="logo-icon">
+                    <rect width="100" height="100" rx="20" fill="#204343"/>
+                    <path d="M75 40 C75 25 60 20 50 20 C35 20 25 30 25 40 L25 48 L55 48 C65 48 75 45 75 40Z" fill="#68E1B9"/>
+                    <path d="M25 60 C25 75 40 80 50 80 C65 80 75 70 75 60 L75 52 L45 52 C35 52 25 55 25 60Z" fill="#FFFFFF"/>
+                </svg>
+                <span>SourceSpark</span>
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <!-- **** HIGHLIGHT ACTIVE PAGE LINK **** -->
+                    <li><a href="explore-projects.html" class="active">Projects</a></li>
+                    <li><a href="explore-hackathons.html">Hackathons</a></li>
+                    <li><a href="explore-mentors.html">Mentors</a></li>
+                </ul>
+            </nav>
+            <div class="nav-auth">
+                <!-- Assuming user might be logged in, or provide profile/dashboard link -->
+                <a href="#" class="btn btn-outline">My Dashboard</a>
+                <a href="#" class="btn btn-primary">Logout</a>
+            </div>
+            <button class="mobile-nav-toggle" aria-label="Toggle navigation">☰</button>
+        </div>
+    </header>
+
+    <main class="explore-page-main">
+        <section class="page-header-section">
+            <div class="container">
+                <!-- **** REPLACE WITH DYNAMIC PAGE TITLE & SUBTITLE **** -->
+                <h1>Explore Open Source Projects</h1>
+                <p class="page-subtitle">Discover projects that match your skills and interests. Find your next contribution!</p>
+            </div>
+        </section>
+
+        <section class="filters-and-search-section">
+            <div class="container">
+                <div class="filters-wrapper">
+                    <div class="search-bar">
+                        <input type="text" placeholder="Search by keyword, tech stack, name...">
+                        <button class="btn btn-primary"><i class="fas fa-search"></i> Search</button>
+                    </div>
+                    <div class="filter-bar">
+                        <!-- **** REPLACE/ADD FILTERS AS NEEDED FOR EACH PAGE **** -->
+                        <div class="filter-group">
+                            <label for="filter-skill">Skill Level:</label>
+                             <div class="custom-select-wrapper">
+                                <select id="filter-skill">
+                                    <option value="">All Levels</option>
+                                    <option value="beginner">Beginner</option>
+                                    <option value="intermediate">Intermediate</option>
+                                    <option value="advanced">Advanced</option>
+                                </select>
+                              </div>
+                        </div>
+                        <div class="filter-group">
+                            <label for="filter-language">Language:</label>
+                            <select id="filter-language">
+                                <option value="">Any Language</option>
+                                <option value="javascript">JavaScript</option>
+                                <option value="python">Python</option>
+                                <option value="java">Java</option>
+                                <option value="csharp">C#</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="filter-tags">Tags:</label>
+                            <select id="filter-tags">
+                                <option value="">All Tags</option>
+                                <option value="web">Web Development</option>
+                                <option value="mobile">Mobile App</option>
+                                <option value="ai">AI/ML</option>
+                                <option value="data">Data Science</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-outline clear-filters-btn">Clear Filters</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="results-section">
+            <div class="container">
+                <div class="results-summary">
+                    <p>Showing <span id="results-count">12</span> results (Page <span id="current-page">1</span> of <span id="total-pages">3</span>)</p>
+                    <!-- Optional Sort By -->
+                    <div class="sort-by">
+                        <label for="sort-options">Sort by:</label>
+                        <select id="sort-options">
+                            <option value="relevance">Relevance</option>
+                            <option value="newest">Newest</option>
+                            <option value="most-active">Most Active</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="results-grid">
+                    <!-- **** THIS IS WHERE THE DYNAMIC CARDS WILL GO **** -->
+                    <!-- Example Project Card (Adapt for Hackathons/Mentors) -->
+                    <div class="item-card project-card"> <!-- Add specific class like project-card, hackathon-card -->
+                        <div class="card-image-placeholder">
+                             <!-- Optional: <img src="project-logo.png" alt="Project Logo"> -->
+                             <i class="fas fa-code"></i> <!-- Placeholder icon -->
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Awesome Project Title</h3>
+                            <p class="card-description">A brief description of the project, its goals, and what it aims to achieve. Looking for contributors of all levels!</p>
+                            <div class="card-tags">
+                                <span>JavaScript</span>
+                                <span>React</span>
+                                <span>Node.js</span>
+                                <span>Beginner-Friendly</span>
+                            </div>
+                            <div class="card-meta">
+                                <span><i class="fas fa-users"></i> 5 Collaborators</span>
+                                <span><i class="fas fa-star"></i> 120 Stars</span>
+                            </div>
+                        </div>
+                        <div class="card-actions">
+                            <a href="#" class="btn btn-primary">View Details</a>
+                            <button class="btn btn-outline btn-icon"><i class="far fa-heart"></i> Show Interest</button>
+                        </div>
+                    </div>
+
+                    <!-- Example Hackathon Card (for reference when adapting) -->
+                    <div class="item-card hackathon-card">
+                        <div class="card-image-placeholder"> <i class="fas fa-trophy"></i> </div>
+                        <div class="card-content">
+                            <div class="hackathon-card-header">
+                               <h3 class="card-title">Global Code Challenge</h3>
+                               <span class="status-badge active">Active</span>
+                            </div>
+                            <p class="card-description">Join developers worldwide to build innovative solutions for sustainability.</p>
+                            <div class="card-tags">
+                                <span>AI</span>
+                                <span>Environment</span>
+                                <span>Open Source</span>
+                            </div>
+                            <div class="card-meta">
+                                <span><i class="far fa-calendar-alt"></i> Ends: Oct 31, 2024</span>
+                                <span><i class="fas fa-users"></i> 200+ Participants</span>
+                            </div>
+                        </div>
+                         <div class="card-actions">
+                            <a href="#" class="btn btn-primary">Learn More & Register</a>
+                        </div>
+                    </div>
+
+                     <!-- Example Mentor Card (for reference when adapting) -->
+                    <div class="item-card mentor-card">
+                        <img src="https://via.placeholder.com/80/DDDDDD/888888?text=JD" alt="Mentor Name" class="mentor-avatar-card">
+                        <div class="card-content">
+                           <h3 class="card-title">Jane Doe</h3>
+                           <p class="mentor-expertise">Senior Software Engineer @ TechCorp</p>
+                            <p class="card-description">Expert in Python, Django, and building scalable web applications. Happy to guide beginners.</p>
+                            <div class="card-tags">
+                                <span>Python</span>
+                                <span>Django</span>
+                                <span>Web Development</span>
+                                <span>Mentorship</span>
+                            </div>
+                        </div>
+                         <div class="card-actions">
+                            <a href="#" class="btn btn-primary">View Profile</a>
+                            <a href="#" class="btn btn-outline">Connect</a>
+                        </div>
+                    </div>
+                    <!-- Repeat .item-card for more results -->
+                     <div class="item-card project-card"> <div class="card-content"><h3 class="card-title">Another Cool Project</h3> <p>...</p></div> <div class="card-actions"><a href="#" class="btn btn-primary">View Details</a></div></div>
+                     <div class="item-card project-card"> <div class="card-content"><h3 class="card-title">Project Gamma</h3> <p>...</p></div> <div class="card-actions"><a href="#" class="btn btn-primary">View Details</a></div></div>
+                </div>
+
+                <!-- No results message (Hidden by default) -->
+                <div class="no-results-message" style="display: none;">
+                    <i class="fas fa-search-minus"></i>
+                    <h2>No Results Found</h2>
+                    <p>Try adjusting your search or filters. We couldn't find anything matching your criteria.</p>
+                </div>
+
+                <div class="pagination-section">
+                    <button class="btn btn-outline pagination-btn" disabled><i class="fas fa-chevron-left"></i> Previous</button>
+                    <span class="page-info">Page 1 of 3</span>
+                    <button class="btn btn-outline pagination-btn">Next <i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer (Same as landing page) -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2024 SourceSpark. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#">About</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Contact Us</a>
+            </div>
+        </div>
+    </footer>
+    <script src="script.js"></script> <!-- Re-use landing page JS (for mobile nav) -->
+    <!-- <script src="explore-script.js"></script> --> <!-- Specific JS for this page if needed -->
+    
+    <style>
+    /* --- Global Styles & Variables --- */
+:root {
+    --primary-dark: #204343; /* Dark Teal */
+    --accent-mint: #68E1B9; /* Mint Green */
+    --light-bg: #f8f9fa; /* Very light gray */
+    --white: #FFFFFF;
+    --text-dark: #333;
+    --text-light: #f1f1f1; /* For text on dark backgrounds */
+    --font-family: 'Urbanist', sans-serif;
+    --border-radius: 12px; /* Consistent rounded corners */
+    --card-shadow: 0 6px 20px rgba(0, 0, 0, 0.07), 0 1px 3px rgba(0,0,0,0.05); /* Softer shadow */
+    --section-padding: 100px 0;
+}
+
+body {
+    margin: 0;
+    font-family: var(--font-family);
+    color: var(--text-dark);
+    line-height: 1.7; /* Increased for readability */
+    background-color: var(--white);
+    -webkit-font-smoothing: antialiased; /* Smoother fonts */
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+    width: 90%;
+    max-width: 1140px; /* Slightly wider for modern screens */
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+h1, h2, h3 {
+    color: var(--primary-dark);
+    font-weight: 700; /* Bold */
+    line-height: 1.3;
+}
+
+h1 { font-size: clamp(2.2rem, 5vw, 3.2rem); margin-bottom: 0.6em; } /* Responsive heading */
+h2 { font-size: clamp(1.8rem, 4vw, 2.5rem); margin-bottom: 0.8em; text-align: center; }
+h3 { font-size: clamp(1.3rem, 3vw, 1.6rem); margin-bottom: 0.5em; }
+
+p {
+    font-size: 1.05rem; /* Slightly larger base paragraph */
+    margin-bottom: 1.2em;
+    color: #555;
+}
+
+a {
+    text-decoration: none;
+    color: var(--accent-mint);
+    transition: color 0.3s ease;
+}
+a:hover {
+    color: #50c8a7; /* Darker mint */
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block; /* Removes bottom space */
+}
+
+/* --- Animation Base --- */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(40px); /* Start slightly lower */
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.animate-on-scroll.animated {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* You can use @keyframes for more complex animations if needed */
+
+/* --- Buttons --- */
+.btn {
+    display: inline-block;
+    padding: 14px 32px; /* Slightly larger */
+    border-radius: var(--border-radius);
+    font-weight: 600; /* SemiBold */
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: var(--accent-mint);
+    color: var(--primary-dark);
+}
+.btn-primary:hover {
+    background-color: #58cbad;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(104, 225, 185, 0.4);
+}
+
+.btn-secondary { /* For use on light backgrounds */
+    background-color: var(--primary-dark);
+    color: var(--white);
+}
+.btn-secondary:hover {
+    background-color: #1a3636;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(32, 67, 67, 0.3);
+}
+
+.btn-outline { /* For navbar Login or secondary actions */
+    background-color: transparent;
+    border-color: var(--accent-mint);
+    color: var(--accent-mint);
+}
+.btn-outline:hover {
+    background-color: var(--accent-mint);
+    color: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+.btn-large {
+    padding: 16px 40px;
+    font-size: 1.15rem;
+}
+
+
+/* --- Navbar --- */
+.navbar {
+    background-color: var(--primary-dark);
+    padding: 18px 0; /* Slightly more padding */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+}
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.logo {
+    display: flex;
+    align-items: center;
+    color: var(--white);
+    font-size: 1.9rem; /* Slightly larger logo text */
+    font-weight: 800; /* ExtraBold for brand name */
+}
+.logo-icon {
+    margin-right: 12px;
+}
+.nav-links {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+.nav-links li {
+    margin-left: 30px;
+}
+.nav-links a {
+    color: var(--white);
+    font-weight: 500; /* Medium */
+    font-size: 1rem;
+    padding-bottom: 5px;
+    position: relative;
+}
+.nav-links a::after { /* Subtle hover underline */
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--accent-mint);
+    transition: width 0.3s ease;
+}
+.nav-links a:hover::after {
+    width: 100%;
+}
+.nav-links a:hover {
+    color: var(--accent-mint); /* Change text color on hover too */
+}
+
+.nav-auth .btn {
+    margin-left: 15px;
+}
+/* Navbar Sign Up button is primary, login is outline */
+.nav-auth .btn-primary { 
+    /* Default primary is fine */
+}
+
+.mobile-nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+
+/* --- Hero Section --- */
+.hero {
+    background-color: var(--primary-dark); /* Dark background for impact */
+    color: var(--white); /* Text color for dark background */
+    padding: var(--section-padding);
+    padding-top: 120px; /* More top padding */
+    padding-bottom: 120px;
+    text-align: left;
+    overflow: hidden; /* Prevent animation overflow issues */
+}
+.hero .container {
+    display: flex;
+    align-items: center;
+    gap: 50px; /* Increased gap */
+}
+.hero-content {
+    flex: 1.2; /* Give slightly more space to text */
+}
+.hero h1 {
+    color: var(--white); /* Override default h1 color */
+    font-weight: 800; /* ExtraBold */
+}
+.hero .subtitle {
+    font-size: 1.25rem;
+    color: var(--text-light); /* Lighter text on dark bg */
+    opacity: 0.9;
+    margin-bottom: 35px;
+    font-weight: 400; /* Regular */
+    max-width: 550px; /* Constrain line length */
+}
+.hero-image {
+    flex: 1;
+    text-align: center;
+}
+.hero-image img {
+    max-width: 500px; /* Larger image */
+    border-radius: var(--border-radius);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3); /* Stronger shadow for image */
+}
+.hero .btn-primary { /* Ensure contrast for hero CTA */
+    background-color: var(--accent-mint);
+    color: var(--primary-dark);
+}
+.hero .btn-primary:hover {
+    box-shadow: 0 6px 15px rgba(104, 225, 185, 0.5);
+}
+
+
+/* --- Problem/Solution Section --- */
+.problem-solution {
+    padding: var(--section-padding);
+    text-align: center;
+}
+.problem-solution p {
+    max-width: 750px; /* Wider for better readability */
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1.15rem; /* Slightly larger */
+    color: #4a4a4a;
+}
+
+/* --- Features Section --- */
+.features {
+    padding: var(--section-padding);
+    background-color: var(--light-bg);
+}
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px; /* Increased gap */
+    margin-top: 50px;
+}
+.feature-card {
+    background-color: var(--white);
+    padding: 35px 30px; /* More padding */
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.feature-card:hover {
+    transform: translateY(-8px); /* More lift */
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1); /* Stronger hover shadow */
+}
+.feature-card .card-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 70px; /* Larger icon container */
+    height: 70px;
+    background-color: var(--accent-mint);
+    color: var(--primary-dark);
+    border-radius: 50%; /* Circle for icons */
+    font-size: 2rem; /* Icon size */
+    margin-bottom: 25px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+.feature-card:hover .card-icon {
+    transform: scale(1.1) rotate(-10deg); /* Slight rotation on hover */
+    background-color: #58cbad; /* Darker mint on hover */
+}
+.feature-card h3 {
+    margin-top: 0;
+    font-weight: 600; /* Semibold */
+}
+
+/* --- How It Works Section --- */
+.how-it-works {
+    padding: var(--section-padding);
+}
+.steps-container {
+    display: flex;
+    justify-content: space-around;
+    gap: 40px;
+    margin-top: 50px;
+    text-align: center;
+}
+.step-card {
+    flex: 1;
+    padding: 25px;
+    position: relative;
+    border-left: 3px solid var(--accent-mint); /* Visual connector element */
+    padding-left: 30px;
+}
+.step-card:first-child {
+    border-left: none; /* Remove border for the first item if preferred */
+    padding-left: 25px;
+}
+.step-number { /* The number */
+    display: inline-block; /* Keeps it with text flow if desired */
+    font-size: 2.5rem;
+    font-weight: 800; /* ExtraBold */
+    color: var(--accent-mint);
+    margin-bottom: 15px;
+    line-height: 1;
+}
+.step-card h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+.step-card p {
+    font-size: 0.95rem;
+    color: #666;
+}
+
+/* --- Resources Teaser Section --- */
+.resources-teaser {
+    padding: var(--section-padding);
+    background-color: var(--primary-dark);
+    color: var(--white);
+}
+.resources-teaser .container {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+}
+.resources-teaser h2, .resources-teaser h3 { /* Override default heading color */
+    color: var(--white);
+    text-align: left;
+}
+.resources-teaser p {
+    color: var(--text-light);
+    opacity: 0.85;
+    max-width: 500px;
+}
+.teaser-content {
+    flex: 1.2;
+}
+.teaser-image {
+    flex: 0.8;
+    text-align: center;
+}
+.teaser-image img {
+    max-width: 400px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+}
+.resources-teaser .btn-secondary { /* Custom for this section: now "mint" btn */
+    background-color: var(--accent-mint);
+    color: var(--primary-dark);
+    border-color: var(--accent-mint);
+    margin-top: 25px;
+}
+.resources-teaser .btn-secondary:hover {
+    background-color: #58cbad;
+    box-shadow: 0 4px 10px rgba(104, 225, 185, 0.4);
+}
+
+/* --- Final CTA Section --- */
+.cta-final {
+    padding: var(--section-padding);
+    text-align: center;
+    background: linear-gradient(45deg, var(--accent-mint), #50d8b0); /* Subtle gradient */
+}
+.cta-final h2 {
+    color: var(--primary-dark);
+    font-weight: 800;
+}
+.cta-final p {
+    font-size: 1.25rem;
+    color: var(--primary-dark);
+    opacity: 0.9;
+    margin-bottom: 35px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.cta-final .btn-primary { /* Custom for this section */
+    background-color: var(--primary-dark);
+    color: var(--white);
+}
+.cta-final .btn-primary:hover {
+    background-color: #1a3636;
+    box-shadow: 0 4px 10px rgba(32, 67, 67, 0.3);
+}
+
+/* --- Footer --- */
+.footer {
+    background-color: #181818; /* Even darker footer */
+    color: #999; /* Lighter gray for footer text */
+    padding: 50px 0;
+    text-align: center;
+}
+.footer .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.footer p {
+    margin: 0 0 15px 0;
+    font-size: 0.95rem;
+}
+.footer-links a {
+    color: #bbb;
+    margin: 0 12px;
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
+}
+.footer-links a:hover {
+    color: var(--accent-mint);
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 992px) {
+    .hero .container, .resources-teaser .container {
+        flex-direction: column;
+        text-align: center;
+    }
+    .hero-content, .teaser-content {
+        margin-bottom: 40px; /* Increased spacing */
+        align-items: center; /* Center content when stacked */
+        display: flex;
+        flex-direction: column;
+    }
+    .hero h1, .resources-teaser h2 { text-align: center; }
+    .hero .subtitle, .resources-teaser p { max-width: 100%; text-align: center;}
+    .hero-image img { margin: 0 auto; }
+
+    .steps-container {
+        flex-direction: column;
+        gap: 30px;
+    }
+    .step-card {
+        border-left: none;
+        padding-left: 20px;
+        border-top: 3px solid var(--accent-mint);
+        padding-top: 20px;
+    }
+     .step-card:first-child {
+        border-top: none;
+        padding-top: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    :root { --section-padding: 70px 0; }
+
+    .nav-links { display: none; }
+    .nav-auth { display: none; }
+    .mobile-nav-toggle { display: block; }
+    
+    .navbar.nav-active {
+        /* Make sure background covers content when menu open */
+        padding-bottom: 10px; 
+    }
+    .navbar.nav-active .nav-links,
+    .navbar.nav-active .nav-auth {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 75px; /* Adjusted based on navbar height */
+        left: 0;
+        width: 100%;
+        background-color: var(--primary-dark);
+        padding: 20px 0;
+        align-items: center;
+        box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .navbar.nav-active .nav-links li { margin: 12px 0; }
+    .navbar.nav-active .nav-auth .btn { margin: 12px 0; width: 80%; text-align: center; }
+}
+
+
+
+
+/* explore-style.css */
+
+/* --- General Explore Page Styles --- */
+.explore-page-main {
+    padding-top: 20px; /* Space below sticky nav */
+}
+
+/* Active Nav Link Style */
+.navbar .nav-links a.active {
+    color: var(--accent-mint); /* Highlight active page */
+    font-weight: 700; /* Make it bolder */
+}
+.navbar .nav-links a.active::after { /* If using underline hover from landing */
+    width: 100%;
+    background-color: var(--accent-mint);
+}
+
+
+/* --- Page Header Section --- */
+.page-header-section {
+    background-color: var(--primary-dark);
+    color: var(--white);
+    padding: 50px 0;
+    text-align: center;
+    margin-bottom: 40px;
+}
+.page-header-section h1 {
+    color: var(--white);
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    margin-bottom: 10px;
+}
+.page-subtitle {
+    font-size: 1.15rem;
+    color: var(--text-light);
+    opacity: 0.85;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* --- Filters and Search Section --- */
+.filters-and-search-section {
+    margin-bottom: 40px;
+}
+.filters-wrapper {
+    background-color: var(--white);
+    padding: 25px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+}
+.search-bar {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+.search-bar input[type="text"] {
+    flex-grow: 1;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-family: var(--font-family);
+}
+.search-bar input[type="text"]:focus {
+    outline: none;
+    border-color: var(--accent-mint);
+    box-shadow: 0 0 0 2px rgba(104, 225, 185, 0.3);
+}
+.search-bar .btn {
+    padding: 12px 20px; /* Match input height */
+}
+
+.filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: flex-end; /* Align button with bottom of selects */
+}
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.filter-group label {
+    font-size: 0.9rem;
+    font-weight: 500; /* Medium */
+    color: var(--primary-dark);
+}
+.filter-group select {
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    background-color: var(--white);
+    font-family: var(--font-family);
+    font-size: 0.95rem;
+    min-width: 180px; /* Ensure select has some width */
+}
+.filter-group select:focus {
+    outline: none;
+    border-color: var(--accent-mint);
+}
+.clear-filters-btn {
+    margin-left: auto; /* Push to the right if space allows */
+    align-self: flex-end; /* Align with bottom of select boxes */
+    padding: 10px 20px;
+}
+
+
+/* --- Results Section --- */
+.results-section {
+    padding-bottom: 60px;
+}
+.results-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 10px 15px;
+    background-color: var(--light-bg);
+    border-radius: var(--border-radius);
+    font-size: 0.95rem;
+    color: #555;
+}
+.results-summary p {
+    margin: 0;
+}
+.results-summary #results-count,
+.results-summary #current-page,
+.results-summary #total-pages {
+    font-weight: 600;
+    color: var(--primary-dark);
+}
+.sort-by label {
+    margin-right: 8px;
+    font-weight: 500;
+}
+.sort-by select {
+    padding: 6px 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-family: var(--font-family);
+    font-size: 0.9rem;
+}
+
+
+/* --- Results Grid & Item Cards --- */
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 30px;
+}
+
+.item-card {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    overflow: hidden; /* Ensures content respects border-radius */
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.item-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.card-image-placeholder { /* For project/hackathon icon or small image */
+    background-color: var(--light-bg);
+    height: 100px; /* Adjust as needed */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-mint);
+    font-size: 2.5rem; /* Icon size */
+}
+.item-card.mentor-card .card-image-placeholder { /* Mentors might not use this */
+    display: none;
+}
+.mentor-avatar-card { /* Specific for mentor cards */
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin: 20px auto 10px; /* Center avatar */
+    object-fit: cover;
+    border: 3px solid var(--accent-mint);
+}
+
+
+.card-content {
+    padding: 20px 25px;
+    flex-grow: 1; /* Allows content to fill space if card heights vary */
+}
+.card-title {
+    font-size: 1.4rem;
+    font-weight: 600; /* SemiBold */
+    color: var(--primary-dark);
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+/* Specific for Hackathon card title if status badge is next to it */
+.hackathon-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.hackathon-card-header .card-title { margin-bottom: 0; }
+.status-badge { /* Copied from landing page for consistency */
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+.status-badge.active { background-color: #d1fae5; color: #065f46; }
+.status-badge.upcoming { background-color: #fef3c7; color: #92400e; }
+.status-badge.completed { background-color: #e5e7eb; color: #4b5563; }
+
+
+.card-description, .mentor-expertise {
+    font-size: 0.95rem;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    /* Limit lines shown with ellipsis for longer descriptions */
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Show 3 lines */
+    -webkit-box-orient: vertical;  
+    overflow: hidden;
+}
+.mentor-expertise { /* For mentor's job title etc. */
+    font-weight: 500;
+    color: var(--primary-dark);
+    opacity: 0.8;
+    margin-bottom: 8px;
+     -webkit-line-clamp: 1; /* Only 1 line */
+}
+
+
+.card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+.card-tags span {
+    background-color: var(--light-bg);
+    color: var(--primary-dark);
+    font-size: 0.8rem;
+    padding: 4px 10px;
+    border-radius: 15px; /* Pill shape */
+    font-weight: 500;
+}
+
+.card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    font-size: 0.85rem;
+    color: #777;
+    margin-bottom: 5px; /* Reduced from 15px if actions are below */
+}
+.card-meta span i {
+    margin-right: 5px;
+    color: var(--accent-mint);
+}
+
+.card-actions {
+    padding: 15px 25px;
+    border-top: 1px solid #eee;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap; /* Allow buttons to wrap on small cards */
+}
+.card-actions .btn {
+    padding: 8px 18px; /* Smaller buttons for cards */
+    font-size: 0.9rem;
+}
+.card-actions .btn-icon { /* For like/interest buttons */
+    padding: 8px 12px;
+}
+.card-actions .btn-primary {
+    flex-grow: 1; /* Main action button takes more space if needed */
+    min-width: 120px;
+}
+
+
+/* --- No Results Message --- */
+.no-results-message {
+    text-align: center;
+    padding: 60px 20px;
+    color: #777;
+}
+.no-results-message i {
+    font-size: 4rem;
+    color: var(--accent-mint);
+    opacity: 0.7;
+    margin-bottom: 20px;
+}
+.no-results-message h2 {
+    font-size: 1.8rem;
+    color: var(--primary-dark);
+    margin-bottom: 10px;
+}
+
+
+/* --- Pagination --- */
+.pagination-section {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+.pagination-btn {
+    padding: 8px 15px;
+}
+.pagination-btn[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: var(--light-bg); /* More subtle disabled state */
+    border-color: #ddd;
+    color: #999;
+}
+.pagination-btn[disabled]:hover {
+    background-color: var(--light-bg);
+    color: #999;
+}
+.page-info {
+    font-size: 0.95rem;
+    color: var(--primary-dark);
+    font-weight: 500;
+}
+
+
+/* --- Responsive Adjustments for Explore Page --- */
+@media (max-width: 992px) {
+    .results-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 25px;
+    }
+}
+
+@media (max-width: 768px) {
+    .page-header-section { padding: 40px 0; margin-bottom: 30px; }
+    .page-header-section h1 { font-size: 1.8rem; }
+    .page-subtitle { font-size: 1rem; }
+
+    .filters-wrapper { padding: 20px; }
+    .search-bar { flex-direction: column; }
+    .search-bar .btn { width: 100%; }
+    
+    .filter-bar {
+        flex-direction: column;
+        align-items: stretch; /* Make filters full width */
+    }
+    .filter-group select { width: 100%; min-width: 0; }
+    .clear-filters-btn { margin-left: 0; width: 100%; margin-top: 15px;}
+
+    .results-summary {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+        padding: 15px;
+    }
+    .results-summary .sort-by { width: 100%; }
+    .results-summary .sort-by select { width: 100%; }
+
+
+    .results-grid {
+        grid-template-columns: 1fr; /* Single column on mobile */
+        gap: 20px;
+    }
+    .item-card .card-title { font-size: 1.25rem; }
+    .item-card .card-description { -webkit-line-clamp: 2; } /* Show 2 lines on mobile */
+
+}
+
+/* --- Custom Select Dropdown Styling --- */
+.custom-select-wrapper {
+    position: relative;
+    display: inline-block; /* Or block if you want them to take full width of filter-group */
+    width: 100%; /* Make wrapper take width of parent (e.g., filter-group) */
+    background-color: var(--white);
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    font-family: var(--font-family);
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.custom-select-wrapper select {
+    /* Reset native appearance */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    /* Make select fill the wrapper */
+    width: 100%;
+    height: 100%;
+    padding: 10px 30px 10px 12px; /* Adjust padding: right padding for arrow space */
+    border: none; /* Border is on the wrapper */
+    background-color: transparent; /* Select is transparent, wrapper has color */
+    color: var(--text-dark); /* Text color for options */
+    font-family: var(--font-family);
+    font-size: 0.95rem;
+    line-height: 1.5; /* Ensure text is vertically centered well */
+    cursor: pointer;
+    border-radius: var(--border-radius); /* For focus outline consistency if any */
+}
+
+/* Remove focus outline from select itself, will be on wrapper */
+.custom-select-wrapper select:focus {
+    outline: none;
+}
+
+/* Style the wrapper on focus (when select inside is focused) */
+.custom-select-wrapper:focus-within,
+.custom-select-wrapper select:focus + .custom-select-wrapper { /* Fallback for some browsers */
+    border-color: var(--accent-mint);
+    box-shadow: 0 0 0 2px rgba(104, 225, 185, 0.3); /* Zapmail focus style */
+}
+
+
+/* Custom Arrow using Font Awesome */
+.custom-select-wrapper::after {
+    content: '\f078'; /* Font Awesome chevron-down icon */
+    font-family: "Font Awesome 5 Free", "Font Awesome 5 Pro", "FontAwesome"; /* Match your FA version */
+    font-weight: 900; /* Solid icon weight */
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    color: var(--primary-dark); /* Arrow color */
+    font-size: 0.8rem;
+    pointer-events: none; /* So click goes to the select */
+    transition: color 0.2s ease;
+}
+
+/* Change arrow color on wrapper hover/focus to match border */
+.custom-select-wrapper:hover::after,
+.custom-select-wrapper:focus-within::after {
+    color: var(--accent-mint);
+}
+
+
+/* Apply to filter groups and sort-by select if they use this structure */
+.filter-group .custom-select-wrapper {
+    min-width: 180px; /* Or remove min-width if filter-group controls width */
+}
+.sort-by .custom-select-wrapper {
+    /* Adjust width if necessary for sort-by context */
+    border-color: #ddd; /* Reset any specific border from general select */
+    min-width: 150px;
+}
+.sort-by .custom-select-wrapper select {
+    padding: 6px 25px 6px 8px; /* Adjust padding for smaller sort-by select */
+    font-size: 0.9rem;
+}
+.sort-by .custom-select-wrapper::after {
+    right: 10px;
+    font-size: 0.7rem;
+}
+
+/* Internet Explorer 10 & 11: Hide default arrow */
+.custom-select-wrapper select::-ms-expand {
+    display: none;
+}
+
+/* Style the options within the dropdown menu - limited styling possible */
+.custom-select-wrapper select option {
+    background-color: var(--white);
+    color: var(--text-dark);
+    padding: 8px 12px; /* May not apply consistently */
+    font-family: var(--font-family);
+}
+/* Hover/Selected state on options - very browser dependent */
+.custom-select-wrapper select option:checked,
+.custom-select-wrapper select option:hover {
+    background-color: var(--accent-mint) !important; /* Try to force style */
+    color: var(--primary-dark) !important;
+}
+
+
+</style>
+    
+</body>
+</html>

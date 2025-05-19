@@ -1,0 +1,203 @@
+/* Add this to your style.css file, perhaps after .how-it-works or replacing .resources-teaser styles */
+
+/* --- Community Resources (Hackathons & Mentors) --- */
+.community-resources {
+    padding: var(--section-padding);
+    background-color: var(--white); /* As requested in your example structure */
+}
+.community-resources h2 {
+    text-align: left; /* Override default center align for section headings */
+    margin-bottom: 0.5em; /* Tighter margin to subtitle */
+}
+.section-subtitle {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 40px;
+    max-width: 90%; /* Prevent overly long lines */
+}
+
+.community-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    gap: 60px; /* Generous gap between columns */
+}
+
+.resource-list {
+    margin-bottom: 30px;
+}
+
+.hackathon-card, .mentor-card {
+    background-color: var(--light-bg); /* Consistent card background */
+    border-radius: var(--border-radius);
+    padding: 20px 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.hackathon-card:hover, .mentor-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+}
+
+/* Hackathon Specific */
+.hackathon-card {
+    border-left: 5px solid var(--accent-mint); /* Prominent left border */
+}
+.hackathon-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Align items to the top */
+    margin-bottom: 10px;
+}
+.hackathon-header h3 {
+    font-size: 1.25rem;
+    font-weight: 600; /* SemiBold */
+    margin-bottom: 0;
+    color: var(--primary-dark);
+}
+.status-badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px; /* Pill shape */
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap; /* Prevent badge from wrapping */
+}
+.status-badge.active {
+    background-color: #d1fae5; /* Light Green */
+    color: #065f46; /* Dark Green */
+}
+.status-badge.upcoming {
+    background-color: #fef3c7; /* Light Yellow */
+    color: #92400e; /* Dark Yellow/Orange */
+}
+.hackathon-description {
+    font-size: 0.95rem;
+    color: #555;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+.hackathon-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+}
+.time-info {
+    color: #777;
+}
+.time-info i {
+    margin-right: 5px;
+    color: var(--accent-mint);
+}
+.learn-more-link {
+    font-weight: 600;
+    color: var(--accent-mint);
+}
+.learn-more-link:hover {
+    text-decoration: underline;
+    color: #50c8a7;
+}
+.learn-more-link i {
+    margin-left: 4px;
+    transition: transform 0.2s ease-in-out;
+}
+.learn-more-link:hover i {
+    transform: translateX(3px);
+}
+
+
+/* Mentor Specific */
+.mentor-card-grid {
+    display: grid;
+    /* For 2 mentors per row on wider screens within the column */
+    grid-template-columns: 1fr; /* Default to 1 mentor per row */
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+@media (min-width: 500px) and (max-width: 991px) { /* When hackathon/mentor columns are full width */
+    .mentor-card-grid {
+         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+}
+@media (min-width: 1200px) { /* If there's enough space within the mentor column */
+    .mentor-card-grid {
+         grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); /* Can fit 2 side-by-side */
+    }
+}
+
+
+.mentor-card {
+    display: flex;
+    align-items: flex-start; /* Align avatar to top of content */
+}
+.mentor-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 18px;
+    object-fit: cover; /* In case you use real images */
+    flex-shrink: 0; /* Prevent avatar from shrinking */
+}
+.mentor-info h4 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: var(--primary-dark);
+}
+.mentor-title {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 10px;
+}
+.mentor-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.mentor-skills span {
+    font-size: 0.75rem;
+    background-color: var(--white); /* Skills on light-bg card */
+    border: 1px solid #e0e0e0;
+    color: var(--primary-dark);
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+
+.view-all-link {
+    margin-top: 10px; /* Spacing above button */
+    display: inline-block; /* To allow margin-top */
+    border-color: var(--primary-dark); /* Outline with dark color */
+    color: var(--primary-dark);
+}
+.view-all-link:hover {
+    background-color: var(--primary-dark);
+    color: var(--white);
+}
+
+
+/* Responsive adjustments for community resources */
+@media (max-width: 991px) { /* Stack columns on medium screens and below */
+    .community-grid {
+        grid-template-columns: 1fr;
+        gap: 50px; /* Gap when stacked */
+    }
+    .community-resources h2 {
+        text-align: center; /* Center headings when stacked */
+    }
+    .section-subtitle {
+        text-align: center;
+        max-width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .view-all-link {
+        display: block; /* Make button full width for better tap target */
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 300px; /* Optional: constrain width */
+    }
+}
