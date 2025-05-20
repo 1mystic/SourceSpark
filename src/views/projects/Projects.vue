@@ -1,317 +1,319 @@
 <template>
-  <div class="projects-page">
-    <section class="page-header-section">
-      <div class="container">
-        <h1>Explore Open Source Projects</h1>
-        <p class="page-subtitle">Discover projects that match your skills and interests. Find your next contribution!</p>
-      </div>
-    </section>
+  <div>
+    <main class="explore-page-main">
+      <section class="page-header-section">
+        <div class="container">
+          <h1>Explore Open Source Projects</h1>
+          <p class="page-subtitle">Discover projects that match your skills and interests. Find your next contribution!</p>
+        </div>
+      </section>
 
-    <section class="filters-and-search-section">
-      <div class="container">
-        <div class="filters-wrapper">
-          <div class="search-bar">
-            <input 
-              type="text" 
-              v-model="searchQuery"
-              placeholder="Search by keyword, tech stack, name..."
-              @input="handleSearch"
-            >
-            <button class="btn btn-primary" @click="handleSearch">
-              <i class="fas fa-search"></i> Search
-            </button>
-          </div>
-          <div class="filter-bar">
-            <div class="filter-group">
-              <label for="filter-skill">Skill Level:</label>
-              <div class="custom-select-wrapper">
-                <select id="filter-skill" v-model="filters.skillLevel" @change="applyFilters">
-                  <option value="">All Levels</option>
-                  <option value="beginner">Beginner</option>
-                  <option value="intermediate">Intermediate</option>
-                  <option value="advanced">Advanced</option>
+      <section class="filters-and-search-section">
+        <div class="container">
+          <div class="filters-wrapper">
+            <div class="search-bar">
+              <input 
+                type="text" 
+                v-model="searchQuery"
+                placeholder="Search by keyword, tech stack, name..."
+                @input="handleSearch"
+              >
+              <button class="btn btn-primary" @click="handleSearch">
+                <i class="fas fa-search"></i> Search
+              </button>
+            </div>
+            <div class="filter-bar">
+              <div class="filter-group">
+                <label for="filter-skill">Skill Level:</label>
+                <div class="custom-select-wrapper">
+                  <select id="filter-skill" v-model="filters.skillLevel" @change="applyFilters">
+                    <option value="">All Levels</option>
+                    <option value="beginner">Beginner</option>
+                    <option value="intermediate">Intermediate</option>
+                    <option value="advanced">Advanced</option>
+                  </select>
+                </div>
+              </div>
+              <div class="filter-group">
+                <label for="filter-language">Language:</label>
+                <select id="filter-language" v-model="filters.language" @change="applyFilters">
+                  <option value="">Any Language</option>
+                  <option v-for="lang in languages" :key="lang" :value="lang">{{ lang }}</option>
                 </select>
               </div>
+              <div class="filter-group">
+                <label for="filter-tags">Tags:</label>
+                <select id="filter-tags" v-model="filters.tag" @change="applyFilters">
+                  <option value="">All Tags</option>
+                  <option v-for="tag in tags" :key="tag" :value="tag">{{ tag }}</option>
+                </select>
+              </div>
+              <div class="filter-actions">
+                <button class="btn btn-outline clear-filters-btn" @click="clearFilters">
+                  <i class="fas fa-times"></i> Clear Filters
+                </button>
+                <button 
+                  v-if="isAuthenticated"
+                  class="btn btn-primary create-project-btn"
+                  @click="showCreateModal = true"
+                >
+                  <i class="fas fa-plus"></i> Create Project
+                </button>
+              </div>
             </div>
-            <div class="filter-group">
-              <label for="filter-language">Language:</label>
-              <select id="filter-language" v-model="filters.language" @change="applyFilters">
-                <option value="">Any Language</option>
-                <option v-for="lang in languages" :key="lang" :value="lang">{{ lang }}</option>
+          </div>
+        </div>
+      </section>
+
+      <section class="results-section">
+        <div class="container">
+          <div class="results-summary">
+            <p>Showing <span>{{ filteredProjects.length }}</span> results (Page <span>{{ currentPage }}</span> of <span>{{ totalPages }}</span>)</p>
+            <div class="sort-by">
+              <label for="sort-options">Sort by:</label>
+              <select id="sort-options" v-model="sortBy" @change="applySorting">
+                <option value="relevance">Relevance</option>
+                <option value="newest">Newest</option>
+                <option value="most-active">Most Active</option>
               </select>
             </div>
-            <div class="filter-group">
-              <label for="filter-tags">Tags:</label>
-              <select id="filter-tags" v-model="filters.tag" @change="applyFilters">
-                <option value="">All Tags</option>
-                <option v-for="tag in tags" :key="tag" :value="tag">{{ tag }}</option>
-              </select>
-            </div>
-            <div class="filter-actions">
-              <button class="btn btn-outline clear-filters-btn" @click="clearFilters">
-                <i class="fas fa-times"></i> Clear Filters
-              </button>
-              <button 
-                v-if="isAuthenticated"
-                class="btn btn-primary create-project-btn"
-                @click="showCreateModal = true"
-              >
-                <i class="fas fa-plus"></i> Create Project
-              </button>
-            </div>
           </div>
-        </div>
-      </div>
-    </section>
 
-    <section class="results-section">
-      <div class="container">
-        <div class="results-summary">
-          <p>Showing <span>{{ filteredProjects.length }}</span> results (Page <span>{{ currentPage }}</span> of <span>{{ totalPages }}</span>)</p>
-          <div class="sort-by">
-            <label for="sort-options">Sort by:</label>
-            <select id="sort-options" v-model="sortBy" @change="applySorting">
-              <option value="relevance">Relevance</option>
-              <option value="newest">Newest</option>
-              <option value="most-active">Most Active</option>
-            </select>
+          <div v-if="loading" class="loading-state">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Loading projects...</p>
           </div>
-        </div>
 
-        <div v-if="loading" class="loading-state">
-          <i class="fas fa-spinner fa-spin"></i>
-          <p>Loading projects...</p>
-        </div>
+          <div v-else-if="error" class="error-state">
+            <i class="fas fa-exclamation-circle"></i>
+            <p>{{ error }}</p>
+            <button class="btn btn-primary" @click="loadProjects">Try Again</button>
+          </div>
 
-        <div v-else-if="error" class="error-state">
-          <i class="fas fa-exclamation-circle"></i>
-          <p>{{ error }}</p>
-          <button class="btn btn-primary" @click="loadProjects">Try Again</button>
-        </div>
-
-        <div class="results-grid">
-          <div v-for="project in paginatedProjects" :key="project.id" class="item-card project-card">
-            <div class="card-image-placeholder">
-              <img v-if="project.coverImage" :src="project.coverImage" :alt="project.title">
-              <DefaultCardImage v-else type="project" />
-            </div>
-            <div class="card-content">
-              <h3 class="card-title">{{ project.title }}</h3>
-              <p class="card-description">{{ project.description }}</p>
-              
-              <div class="card-requirements">
-                <div class="requirement-item">
-                  <i class="fas fa-signal"></i>
-                  <span class="skill-level" :class="project.skillLevel">
-                    {{ project.skillLevel }}
-                  </span>
+          <div class="results-grid">
+            <div v-for="project in paginatedProjects" :key="project.id" class="item-card project-card">
+              <div class="card-image-placeholder">
+                <img v-if="project.coverImage" :src="project.coverImage" :alt="project.title">
+                <DefaultCardImage v-else type="project" />
+              </div>
+              <div class="card-content">
+                <h3 class="card-title">{{ project.title }}</h3>
+                <p class="card-description">{{ project.description }}</p>
+                
+                <div class="card-requirements">
+                  <div class="requirement-item">
+                    <i class="fas fa-signal"></i>
+                    <span class="skill-level" :class="project.skillLevel">
+                      {{ project.skillLevel }}
+                    </span>
+                  </div>
+                  <div class="requirement-item">
+                    <i class="fas fa-code"></i>
+                    <span class="languages">
+                      {{ project.languages.join(', ') }}
+                    </span>
+                  </div>
                 </div>
-                <div class="requirement-item">
-                  <i class="fas fa-code"></i>
-                  <span class="languages">
-                    {{ project.languages.join(', ') }}
-                  </span>
-                </div>
-              </div>
 
-              <div class="card-tags">
-                <span v-for="tag in project.tags" :key="tag" class="tag">{{ tag }}</span>
-                <span 
-                  v-for="skill in project.customSkills" 
-                  :key="skill" 
-                  class="tag custom-skill"
-                >
-                  {{ skill }}
-                </span>
-              </div>
-
-              <div class="card-meta">
-                <span><i class="fas fa-users"></i> {{ project.collaborators?.length || 0 }} Collaborators</span>
-                <span><i class="fas fa-star"></i> {{ project.stars || 0 }} Stars</span>
-              </div>
-            </div>
-            <div class="card-actions">
-              <router-link :to="'/projects/' + project.id" class="btn btn-primary">View Details</router-link>
-              <button 
-                v-if="!isOwner(project)"
-                class="btn btn-outline btn-icon" 
-                @click="toggleInterest(project)"
-                :class="{ 'interested': project.isInterested }"
-              >
-                <i :class="project.isInterested ? 'fas fa-heart' : 'far fa-heart'"></i> 
-                {{ project.isInterested ? 'Interested' : 'Show Interest' }}
-              </button>
-            </div>
-            <div v-if="isOwner(project)" class="card-actions-owner">
-              <div class="owner-actions">
-                <button 
-                  class="btn btn-outline btn-icon"
-                  @click="openEditModal(project)"
-                >
-                  <i class="fas fa-edit"></i> Edit
-                </button>
-                <button 
-                  class="btn btn-outline btn-icon delete-btn"
-                  @click="deleteProject(project.id)"
-                >
-                  <i class="fas fa-trash"></i> Delete
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div v-if="filteredProjects.length === 0" class="no-results-message">
-          <i class="fas fa-search-minus"></i>
-          <h2>No Results Found</h2>
-          <p>Try adjusting your search or filters. We couldn't find anything matching your criteria.</p>
-        </div>
-
-        <div class="pagination-section" v-if="totalPages > 1">
-          <button 
-            class="btn btn-outline pagination-btn" 
-            :disabled="currentPage === 1"
-            @click="changePage(currentPage - 1)"
-          >
-            <i class="fas fa-chevron-left"></i> Previous
-          </button>
-          <span class="page-info">Page {{ currentPage }} of {{ totalPages }}</span>
-          <button 
-            class="btn btn-outline pagination-btn"
-            :disabled="currentPage === totalPages"
-            @click="changePage(currentPage + 1)"
-          >
-            Next <i class="fas fa-chevron-right"></i>
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <div v-if="showCreateModal || showEditModal" class="modal-overlay">
-      <div class="modal-content">
-        <h2>{{ showEditModal ? 'Edit Project' : 'Create New Project' }}</h2>
-        <form @submit.prevent="showEditModal ? updateProject() : createProject()">
-          <div class="form-group">
-            <label for="project-title">Title</label>
-            <input 
-              id="project-title"
-              v-model="projectForm.title"
-              type="text"
-              required
-              placeholder="Enter project title"
-            >
-          </div>
-          
-          <div class="form-group">
-            <label for="project-description">Description</label>
-            <textarea 
-              id="project-description"
-              v-model="projectForm.description"
-              required
-              placeholder="Enter project description"
-            ></textarea>
-          </div>
-          
-          <div class="form-group">
-            <label for="project-skill-level">Skill Level</label>
-            <select 
-              id="project-skill-level"
-              v-model="projectForm.skillLevel"
-              required
-            >
-              <option value="">Select skill level</option>
-              <option value="beginner">Beginner</option>
-              <option value="intermediate">Intermediate</option>
-              <option value="advanced">Advanced</option>
-            </select>
-          </div>
-          
-          <div class="form-group">
-            <label>Languages</label>
-            <div class="checkbox-group">
-              <label v-for="lang in languages" :key="lang">
-                <input 
-                  type="checkbox"
-                  :value="lang"
-                  v-model="projectForm.languages"
-                >
-                {{ lang }}
-              </label>
-            </div>
-          </div>
-          
-          <div class="form-group">
-            <label>Tags</label>
-            <div class="checkbox-group">
-              <label v-for="tag in tags" :key="tag">
-                <input 
-                  type="checkbox"
-                  :value="tag"
-                  v-model="projectForm.tags"
-                >
-                {{ tag }}
-              </label>
-            </div>
-          </div>
-          
-          <div class="form-group">
-            <label>Custom Skills</label>
-            <div class="custom-skills-input">
-              <div class="input-group">
-                <input 
-                  type="text" 
-                  v-model="newCustomSkill"
-                  placeholder="Add a custom skill"
-                  @keyup.enter="addCustomSkill"
-                >
-                <button 
-                  type="button" 
-                  class="btn btn-outline btn-sm"
-                  @click="addCustomSkill"
-                >
-                  <i class="fas fa-plus"></i> Add
-                </button>
-              </div>
-              <div class="custom-skills-list">
-                <div 
-                  v-for="skill in projectForm.customSkills" 
-                  :key="skill" 
-                  class="custom-skill-tag"
-                >
-                  {{ skill }}
-                  <button 
-                    type="button" 
-                    class="remove-skill"
-                    @click="removeCustomSkill(skill)"
+                <div class="card-tags">
+                  <span v-for="tag in project.tags" :key="tag" class="tag">{{ tag }}</span>
+                  <span 
+                    v-for="skill in project.customSkills" 
+                    :key="skill" 
+                    class="tag custom-skill"
                   >
-                    <i class="fas fa-times"></i>
+                    {{ skill }}
+                  </span>
+                </div>
+
+                <div class="card-meta">
+                  <span><i class="fas fa-users"></i> {{ project.collaborators?.length || 0 }} Collaborators</span>
+                  <span><i class="fas fa-star"></i> {{ project.stars || 0 }} Stars</span>
+                </div>
+              </div>
+              <div class="card-actions">
+                <router-link :to="'/projects/' + project.id" class="btn btn-primary">View Details</router-link>
+                <button 
+                  v-if="!isOwner(project)"
+                  class="btn btn-outline btn-icon" 
+                  @click="toggleInterest(project)"
+                  :class="{ 'interested': project.isInterested }"
+                >
+                  <i :class="project.isInterested ? 'fas fa-heart' : 'far fa-heart'"></i> 
+                  {{ project.isInterested ? 'Interested' : 'Show Interest' }}
+                </button>
+              </div>
+              <div v-if="isOwner(project)" class="card-actions-owner">
+                <div class="owner-actions">
+                  <button 
+                    class="btn btn-outline btn-icon"
+                    @click="openEditModal(project)"
+                  >
+                    <i class="fas fa-edit"></i> Edit
+                  </button>
+                  <button 
+                    class="btn btn-outline btn-icon delete-btn"
+                    @click="deleteProject(project.id)"
+                  >
+                    <i class="fas fa-trash"></i> Delete
                   </button>
                 </div>
               </div>
             </div>
           </div>
-          
-          <div class="form-group">
-            <label for="project-cover">Cover Image URL</label>
-            <input 
-              id="project-cover"
-              v-model="projectForm.coverImage"
-              type="url"
-              placeholder="Enter cover image URL"
+
+          <div v-if="filteredProjects.length === 0" class="no-results-message">
+            <i class="fas fa-search-minus"></i>
+            <h2>No Results Found</h2>
+            <p>Try adjusting your search or filters. We couldn't find anything matching your criteria.</p>
+          </div>
+
+          <div class="pagination-section" v-if="totalPages > 1">
+            <button 
+              class="btn btn-outline pagination-btn" 
+              :disabled="currentPage === 1"
+              @click="changePage(currentPage - 1)"
             >
-          </div>
-          
-          <div class="modal-actions">
-            <button type="button" class="btn btn-outline" @click="closeModal">
-              Cancel
+              <i class="fas fa-chevron-left"></i> Previous
             </button>
-            <button type="submit" class="btn btn-primary">
-              {{ showEditModal ? 'Update Project' : 'Create Project' }}
+            <span class="page-info">Page {{ currentPage }} of {{ totalPages }}</span>
+            <button 
+              class="btn btn-outline pagination-btn"
+              :disabled="currentPage === totalPages"
+              @click="changePage(currentPage + 1)"
+            >
+              Next <i class="fas fa-chevron-right"></i>
             </button>
           </div>
-        </form>
+        </div>
+      </section>
+
+      <div v-if="showCreateModal || showEditModal" class="modal-overlay">
+        <div class="modal-content">
+          <h2>{{ showEditModal ? 'Edit Project' : 'Create New Project' }}</h2>
+          <form @submit.prevent="showEditModal ? updateProject() : createProject()">
+            <div class="form-group">
+              <label for="project-title">Title</label>
+              <input 
+                id="project-title"
+                v-model="projectForm.title"
+                type="text"
+                required
+                placeholder="Enter project title"
+              >
+            </div>
+            
+            <div class="form-group">
+              <label for="project-description">Description</label>
+              <textarea 
+                id="project-description"
+                v-model="projectForm.description"
+                required
+                placeholder="Enter project description"
+              ></textarea>
+            </div>
+            
+            <div class="form-group">
+              <label for="project-skill-level">Skill Level</label>
+              <select 
+                id="project-skill-level"
+                v-model="projectForm.skillLevel"
+                required
+              >
+                <option value="">Select skill level</option>
+                <option value="beginner">Beginner</option>
+                <option value="intermediate">Intermediate</option>
+                <option value="advanced">Advanced</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label>Languages</label>
+              <div class="checkbox-group">
+                <label v-for="lang in languages" :key="lang">
+                  <input 
+                    type="checkbox"
+                    :value="lang"
+                    v-model="projectForm.languages"
+                  >
+                  {{ lang }}
+                </label>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label>Tags</label>
+              <div class="checkbox-group">
+                <label v-for="tag in tags" :key="tag">
+                  <input 
+                    type="checkbox"
+                    :value="tag"
+                    v-model="projectForm.tags"
+                  >
+                  {{ tag }}
+                </label>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label>Custom Skills</label>
+              <div class="custom-skills-input">
+                <div class="input-group">
+                  <input 
+                    type="text" 
+                    v-model="newCustomSkill"
+                    placeholder="Add a custom skill"
+                    @keyup.enter="addCustomSkill"
+                  >
+                  <button 
+                    type="button" 
+                    class="btn btn-outline btn-sm"
+                    @click="addCustomSkill"
+                  >
+                    <i class="fas fa-plus"></i> Add
+                  </button>
+                </div>
+                <div class="custom-skills-list">
+                  <div 
+                    v-for="skill in projectForm.customSkills" 
+                    :key="skill" 
+                    class="custom-skill-tag"
+                  >
+                    {{ skill }}
+                    <button 
+                      type="button" 
+                      class="remove-skill"
+                      @click="removeCustomSkill(skill)"
+                    >
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="project-cover">Cover Image URL</label>
+              <input 
+                id="project-cover"
+                v-model="projectForm.coverImage"
+                type="url"
+                placeholder="Enter cover image URL"
+              >
+            </div>
+            
+            <div class="modal-actions">
+              <button type="button" class="btn btn-outline" @click="closeModal">
+                Cancel
+              </button>
+              <button type="submit" class="btn btn-primary">
+                {{ showEditModal ? 'Update Project' : 'Create Project' }}
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
+    </main>
   </div>
 </template>
 
@@ -328,6 +330,7 @@ export default {
   },
   data() {
     return {
+      scrollObserver: null,
       searchQuery: '',
       currentPage: 1,
       itemsPerPage: 9,
@@ -551,6 +554,36 @@ export default {
       this.projectForm.customSkills = this.projectForm.customSkills.filter(s => s !== skill);
     }
   },
+  mounted() {
+    this.scrollObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animated'); // Use .animated from main.css
+          // Optionally unobserve after animation
+          // this.scrollObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    const elementsToAnimate = this.$el.querySelectorAll('.animate-on-scroll');
+    elementsToAnimate.forEach(el => {
+      if (this.scrollObserver) {
+        this.scrollObserver.observe(el);
+      }
+    });
+  },
+  beforeUnmount() {
+    if (this.scrollObserver) {
+      const elementsToAnimate = this.$el.querySelectorAll('.animate-on-scroll');
+      elementsToAnimate.forEach(el => {
+         if (this.scrollObserver) {
+            this.scrollObserver.unobserve(el);
+         }
+      });
+      this.scrollObserver.disconnect();
+      this.scrollObserver = null;
+    }
+  },
   async created() {
     onAuthStateChanged(auth, (user) => {
       this.currentUser = user;
@@ -562,6 +595,8 @@ export default {
 </script>
 
 <style scoped>
+@import '../../assets/styles/explore.css';
+
 .projects-page {
   padding: var(--spacing-2xl) 0;
 }

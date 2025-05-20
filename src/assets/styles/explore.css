@@ -1,0 +1,484 @@
+/* explore-style.css */
+
+/* --- General Explore Page Styles --- */
+.explore-page-main {
+    padding-top: 20px; /* Space below sticky nav */
+}
+
+/* Active Nav Link Style */
+.navbar .nav-links a.active {
+    color: var(--accent-mint); /* Highlight active page */
+    font-weight: 700; /* Make it bolder */
+}
+.navbar .nav-links a.active::after { /* If using underline hover from landing */
+    width: 100%;
+    background-color: var(--accent-mint);
+}
+
+
+/* --- Page Header Section --- */
+.page-header-section {
+    background-color: var(--primary-dark);
+    color: var(--white);
+    padding: 50px 0;
+    text-align: center;
+    margin-bottom: 40px;
+}
+.page-header-section h1 {
+    color: var(--white);
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    margin-bottom: 10px;
+}
+.page-subtitle {
+    font-size: 1.15rem;
+    color: var(--text-light);
+    opacity: 0.85;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* --- Filters and Search Section --- */
+.filters-and-search-section {
+    margin-bottom: 40px;
+}
+.filters-wrapper {
+    background-color: var(--white);
+    padding: 25px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+}
+.search-bar {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+.search-bar input[type="text"] {
+    flex-grow: 1;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-family: var(--font-family);
+}
+.search-bar input[type="text"]:focus {
+    outline: none;
+    border-color: var(--accent-mint);
+    box-shadow: 0 0 0 2px rgba(104, 225, 185, 0.3);
+}
+.search-bar .btn {
+    padding: 12px 20px; /* Match input height */
+}
+
+.filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: flex-end; /* Align button with bottom of selects */
+}
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.filter-group label {
+    font-size: 0.9rem;
+    font-weight: 500; /* Medium */
+    color: var(--primary-dark);
+}
+.filter-group select {
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    background-color: var(--white);
+    font-family: var(--font-family);
+    font-size: 0.95rem;
+    min-width: 180px; /* Ensure select has some width */
+}
+.filter-group select:focus {
+    outline: none;
+    border-color: var(--accent-mint);
+}
+.clear-filters-btn {
+    margin-left: auto; /* Push to the right if space allows */
+    align-self: flex-end; /* Align with bottom of select boxes */
+    padding: 10px 20px;
+}
+
+
+/* --- Results Section --- */
+.results-section {
+    padding-bottom: 60px;
+}
+.results-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 10px 15px;
+    background-color: var(--light-bg);
+    border-radius: var(--border-radius);
+    font-size: 0.95rem;
+    color: #555;
+}
+.results-summary p {
+    margin: 0;
+}
+.results-summary #results-count,
+.results-summary #current-page,
+.results-summary #total-pages {
+    font-weight: 600;
+    color: var(--primary-dark);
+}
+.sort-by label {
+    margin-right: 8px;
+    font-weight: 500;
+}
+.sort-by select {
+    padding: 6px 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-family: var(--font-family);
+    font-size: 0.9rem;
+}
+
+
+/* --- Results Grid & Item Cards --- */
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 30px;
+}
+
+.item-card {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    overflow: hidden; /* Ensures content respects border-radius */
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.item-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.card-image-placeholder { /* For project/hackathon icon or small image */
+    background-color: var(--light-bg);
+    height: 100px; /* Adjust as needed */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-mint);
+    font-size: 2.5rem; /* Icon size */
+}
+.item-card.mentor-card .card-image-placeholder { /* Mentors might not use this */
+    display: none;
+}
+.mentor-avatar-card { /* Specific for mentor cards */
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin: 20px auto 10px; /* Center avatar */
+    object-fit: cover;
+    border: 3px solid var(--accent-mint);
+}
+
+
+.card-content {
+    padding: 20px 25px;
+    flex-grow: 1; /* Allows content to fill space if card heights vary */
+}
+.card-title {
+    font-size: 1.4rem;
+    font-weight: 600; /* SemiBold */
+    color: var(--primary-dark);
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+/* Specific for Hackathon card title if status badge is next to it */
+.hackathon-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.hackathon-card-header .card-title { margin-bottom: 0; }
+.status-badge { /* Copied from landing page for consistency */
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+.status-badge.active { background-color: #d1fae5; color: #065f46; }
+.status-badge.upcoming { background-color: #fef3c7; color: #92400e; }
+.status-badge.completed { background-color: #e5e7eb; color: #4b5563; }
+
+
+.card-description, .mentor-expertise {
+    font-size: 0.95rem;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    /* Limit lines shown with ellipsis for longer descriptions */
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Show 3 lines */
+    -webkit-box-orient: vertical;  
+    overflow: hidden;
+}
+.mentor-expertise { /* For mentor's job title etc. */
+    font-weight: 500;
+    color: var(--primary-dark);
+    opacity: 0.8;
+    margin-bottom: 8px;
+     -webkit-line-clamp: 1; /* Only 1 line */
+}
+
+
+.card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+.card-tags span {
+    background-color: var(--light-bg);
+    color: var(--primary-dark);
+    font-size: 0.8rem;
+    padding: 4px 10px;
+    border-radius: 15px; /* Pill shape */
+    font-weight: 500;
+}
+
+.card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    font-size: 0.85rem;
+    color: #777;
+    margin-bottom: 5px; /* Reduced from 15px if actions are below */
+}
+.card-meta span i {
+    margin-right: 5px;
+    color: var(--accent-mint);
+}
+
+.card-actions {
+    padding: 15px 25px;
+    border-top: 1px solid #eee;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap; /* Allow buttons to wrap on small cards */
+}
+.card-actions .btn {
+    padding: 8px 18px; /* Smaller buttons for cards */
+    font-size: 0.9rem;
+}
+.card-actions .btn-icon { /* For like/interest buttons */
+    padding: 8px 12px;
+}
+.card-actions .btn-primary {
+    flex-grow: 1; /* Main action button takes more space if needed */
+    min-width: 120px;
+}
+
+
+/* --- No Results Message --- */
+.no-results-message {
+    text-align: center;
+    padding: 60px 20px;
+    color: #777;
+}
+.no-results-message i {
+    font-size: 4rem;
+    color: var(--accent-mint);
+    opacity: 0.7;
+    margin-bottom: 20px;
+}
+.no-results-message h2 {
+    font-size: 1.8rem;
+    color: var(--primary-dark);
+    margin-bottom: 10px;
+}
+
+
+/* --- Pagination --- */
+.pagination-section {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+.pagination-btn {
+    padding: 8px 15px;
+}
+.pagination-btn[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: var(--light-bg); /* More subtle disabled state */
+    border-color: #ddd;
+    color: #999;
+}
+.pagination-btn[disabled]:hover {
+    background-color: var(--light-bg);
+    color: #999;
+}
+.page-info {
+    font-size: 0.95rem;
+    color: var(--primary-dark);
+    font-weight: 500;
+}
+
+
+/* --- Responsive Adjustments for Explore Page --- */
+@media (max-width: 992px) {
+    .results-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 25px;
+    }
+}
+
+@media (max-width: 768px) {
+    .page-header-section { padding: 40px 0; margin-bottom: 30px; }
+    .page-header-section h1 { font-size: 1.8rem; }
+    .page-subtitle { font-size: 1rem; }
+
+    .filters-wrapper { padding: 20px; }
+    .search-bar { flex-direction: column; }
+    .search-bar .btn { width: 100%; }
+    
+    .filter-bar {
+        flex-direction: column;
+        align-items: stretch; /* Make filters full width */
+    }
+    .filter-group select { width: 100%; min-width: 0; }
+    .clear-filters-btn { margin-left: 0; width: 100%; margin-top: 15px;}
+
+    .results-summary {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+        padding: 15px;
+    }
+    .results-summary .sort-by { width: 100%; }
+    .results-summary .sort-by select { width: 100%; }
+
+
+    .results-grid {
+        grid-template-columns: 1fr; /* Single column on mobile */
+        gap: 20px;
+    }
+    .item-card .card-title { font-size: 1.25rem; }
+    .item-card .card-description { -webkit-line-clamp: 2; } /* Show 2 lines on mobile */
+
+}
+
+/* --- Custom Select Dropdown Styling --- */
+.custom-select-wrapper {
+    position: relative;
+    display: inline-block; /* Or block if you want them to take full width of filter-group */
+    width: 100%; /* Make wrapper take width of parent (e.g., filter-group) */
+    background-color: var(--white);
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    font-family: var(--font-family);
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.custom-select-wrapper select {
+    /* Reset native appearance */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    /* Make select fill the wrapper */
+    width: 100%;
+    height: 100%;
+    padding: 10px 30px 10px 12px; /* Adjust padding: right padding for arrow space */
+    border: none; /* Border is on the wrapper */
+    background-color: transparent; /* Select is transparent, wrapper has color */
+    color: var(--text-dark); /* Text color for options */
+    font-family: var(--font-family);
+    font-size: 0.95rem;
+    line-height: 1.5; /* Ensure text is vertically centered well */
+    cursor: pointer;
+    border-radius: var(--border-radius); /* For focus outline consistency if any */
+}
+
+/* Remove focus outline from select itself, will be on wrapper */
+.custom-select-wrapper select:focus {
+    outline: none;
+}
+
+/* Style the wrapper on focus (when select inside is focused) */
+.custom-select-wrapper:focus-within,
+.custom-select-wrapper select:focus + .custom-select-wrapper { /* Fallback for some browsers */
+    border-color: var(--accent-mint);
+    box-shadow: 0 0 0 2px rgba(104, 225, 185, 0.3); /* Zapmail focus style */
+}
+
+
+/* Custom Arrow using Font Awesome */
+.custom-select-wrapper::after {
+    content: '\f078'; /* Font Awesome chevron-down icon */
+    font-family: "Font Awesome 5 Free", "Font Awesome 5 Pro", "FontAwesome"; /* Match your FA version */
+    font-weight: 900; /* Solid icon weight */
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    color: var(--primary-dark); /* Arrow color */
+    font-size: 0.8rem;
+    pointer-events: none; /* So click goes to the select */
+    transition: color 0.2s ease;
+}
+
+/* Change arrow color on wrapper hover/focus to match border */
+.custom-select-wrapper:hover::after,
+.custom-select-wrapper:focus-within::after {
+    color: var(--accent-mint);
+}
+
+
+/* Apply to filter groups and sort-by select if they use this structure */
+.filter-group .custom-select-wrapper {
+    min-width: 180px; /* Or remove min-width if filter-group controls width */
+}
+.sort-by .custom-select-wrapper {
+    /* Adjust width if necessary for sort-by context */
+    border-color: #ddd; /* Reset any specific border from general select */
+    min-width: 150px;
+}
+.sort-by .custom-select-wrapper select {
+    padding: 6px 25px 6px 8px; /* Adjust padding for smaller sort-by select */
+    font-size: 0.9rem;
+}
+.sort-by .custom-select-wrapper::after {
+    right: 10px;
+    font-size: 0.7rem;
+}
+
+/* Internet Explorer 10 & 11: Hide default arrow */
+.custom-select-wrapper select::-ms-expand {
+    display: none;
+}
+
+/* Style the options within the dropdown menu - limited styling possible */
+.custom-select-wrapper select option {
+    background-color: var(--white);
+    color: var(--text-dark);
+    padding: 8px 12px; /* May not apply consistently */
+    font-family: var(--font-family);
+}
+/* Hover/Selected state on options - very browser dependent */
+.custom-select-wrapper select option:checked,
+.custom-select-wrapper select option:hover {
+    background-color: var(--accent-mint) !important; /* Try to force style */
+    color: var(--primary-dark) !important;
+} 

@@ -6,6 +6,7 @@ import * as components from 'vuetify/components';
 import * as directives from 'vuetify/directives';
 import { createRouter, createWebHistory } from 'vue-router';
 import './style.css';
+import './assets/styles/main.css';
 
 
 // Import main page views

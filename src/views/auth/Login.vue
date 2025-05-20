@@ -129,7 +129,7 @@ export default {
       this.error = '';
       try {
         await signInWithEmailAndPassword(auth, this.email, this.password);
-        this.$router.push('/');
+        this.$router.push('/projects');
       } catch (err) {
         this.error = 'Login failed. ' + (err.message || '');
       } finally {
@@ -141,7 +141,7 @@ export default {
       this.error = '';
       try {
         await signInWithPopup(auth, googleProvider);
-        this.$router.push('/');
+        this.$router.push('/projects');
       } catch (err) {
         this.error = 'Google login failed. ' + (err.message || '');
       } finally {
@@ -153,7 +153,7 @@ export default {
       this.error = '';
       try {
         await signInWithPopup(auth, githubProvider);
-        this.$router.push('/');
+        this.$router.push('/projects');
       } catch (err) {
         this.error = 'GitHub login failed. ' + (err.message || '');
       } finally {

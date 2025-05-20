@@ -1,8 +1,7 @@
 <template>
   <div id="app" :class="{ 'dark-mode': darkMode }">
-    <header class="navbar">
+    <header class="navbar" :class="{ 'nav-active': isMobileNavOpen }">
       <div class="container">
-        <div class="header-content">
           <router-link to="/" class="logo">
             <svg width="36" height="36" viewBox="0 0 100 100" class="logo-icon">
               <rect width="100" height="100" rx="20" fill="#204343"/>
@@ -11,24 +10,29 @@
             </svg>
             <span>SourceSpark</span>
           </router-link>
-          <nav class="main-nav">
-            <router-link to="/projects" class="nav-link">Projects</router-link>
-            <router-link to="/community" class="nav-link">Community</router-link>
-            <router-link to="/mentorship" class="nav-link">Mentorship</router-link>
-            <router-link to="/hackathons" class="nav-link">Hackathons</router-link>
-            <router-link to="/about" class="nav-link">About</router-link>
+          <nav class="main-nav" :class="{ 'nav-links': true, 'mobile-hidden': true }">
+            <ul v-if="isHomePage" class="nav-links">
+              <li><router-link to="/#features">Features</router-link></li>
+              <li><router-link to="/#how-it-works">How it Works</router-link></li>
+              <li><router-link to="/#resources">Resources</router-link></li>
+            </ul>
+            <ul v-else class="nav-links">
+              <li><router-link to="/projects" active-class="active">Projects</router-link></li>
+              <li><router-link to="/hackathons" active-class="active">Hackathons</router-link></li>
+              <li><router-link to="/mentorship" active-class="active">Mentors</router-link></li>
+              <li><router-link to="/about" active-class="active">About</router-link></li>
+            </ul>
           </nav>
-          <div class="nav-actions">
-            <button @click="toggleDarkMode" class="theme-toggle">
-              <span v-if="darkMode" class="light-icon">☀️</span>
-              <span v-else class="dark-icon">🌙</span>
-            </button>
+          <div class="nav-auth">
             <template v-if="isLoggedIn">
               <div class="user-menu" @click="toggleUserMenu">
-                <img :src="userAvatar" alt="User Avatar" class="user-avatar">
+                <div class="user-info">
+                  <span class="username">{{ currentUser?.displayName || 'User' }}</span>
+                  <img :src="userAvatar" alt="User Avatar" class="user-avatar-btn">
+                </div>
                 <div class="user-menu-dropdown" v-if="showUserMenu">
-                  <router-link to="/profile/username" class="dropdown-item">My Profile</router-link>
-                  <router-link to="/profile/username/portfolio" class="dropdown-item">Portfolio</router-link>
+                  <router-link :to="`/profile/${currentUser?.uid || 'username'}`" class="dropdown-item">My Profile</router-link>
+                  <router-link :to="`/profile/${currentUser?.uid || 'username'}/portfolio`" class="dropdown-item">Portfolio</router-link>
                   <router-link to="/projects/create" class="dropdown-item">Create Project</router-link>
                   <div class="dropdown-divider"/>
                   <button @click="handleLogout" class="dropdown-item logout-btn">Log Out</button>
@@ -36,35 +40,40 @@
               </div>
             </template>
             <template v-else>
-              <router-link to="/login" class="btn btn-outline">Log In</router-link>
+              <router-link to="/login" class="btn btn-outline">Login</router-link>
               <router-link to="/signup" class="btn btn-primary">Sign Up</router-link>
             </template>
           </div>
           <button class="mobile-nav-toggle" @click="toggleMobileMenu" aria-label="Toggle navigation">
-            <span class="menu-icon"></span>
+            <!-- Content will be set by toggleMobileMenu (☰ or ×) -->
           </button>
-        </div>
+        
       </div>
       <!-- Mobile menu -->
-      <div class="mobile-menu" v-if="showMobileMenu">
-        <router-link to="/projects" class="mobile-nav-link">Projects</router-link>
-        <router-link to="/community" class="mobile-nav-link">Community</router-link>
-        <router-link to="/mentorship" class="mobile-nav-link">Mentorship</router-link>
-        <router-link to="/hackathons" class="mobile-nav-link">Hackathons</router-link>
-        <router-link to="/about" class="mobile-nav-link">About</router-link>
-        <template v-if="isLoggedIn">
+      <nav class="nav-links mobile-nav-menu" v-if="isMobileNavOpen">
+        <ul v-if="isHomePage">
+          <li><router-link to="/#features" @click="toggleMobileMenu">Features</router-link></li>
+          <li><router-link to="/#how-it-works" @click="toggleMobileMenu">How it Works</router-link></li>
+          <li><router-link to="/#resources" @click="toggleMobileMenu">Resources</router-link></li>
+        </ul>
+        <ul v-else>
+          <li><router-link to="/projects" active-class="active" @click="toggleMobileMenu">Projects</router-link></li>
+          <li><router-link to="/hackathons" active-class="active" @click="toggleMobileMenu">Hackathons</router-link></li>
+          <li><router-link to="/mentors" active-class="active" @click="toggleMobileMenu">Mentors</router-link></li>
+          <li><router-link to="/about" active-class="active" @click="toggleMobileMenu">About</router-link></li>
+        </ul>
+        <!-- Mobile Auth Links -->
+        <template v-if="!isLoggedIn">
           <div class="mobile-divider"/>
-          <router-link to="/profile/username" class="mobile-nav-link">My Profile</router-link>
-          <router-link to="/profile/username/portfolio" class="mobile-nav-link">Portfolio</router-link>
-          <router-link to="/projects/create" class="mobile-nav-link">Create Project</router-link>
-          <button @click="handleLogout" class="mobile-nav-link logout-btn">Log Out</button>
+          <li><router-link to="/login" class="btn btn-outline" @click="toggleMobileMenu">Login</router-link></li>
+          <li><router-link to="/signup" class="btn btn-primary" @click="toggleMobileMenu">Sign Up</router-link></li>
         </template>
         <template v-else>
           <div class="mobile-divider"/>
-          <router-link to="/login" class="mobile-nav-link">Log In</router-link>
-          <router-link to="/signup" class="mobile-nav-link">Sign Up</router-link>
+          <li><router-link :to="`/profile/${currentUser?.uid || 'username'}`" @click="toggleMobileMenu">My Profile</router-link></li>
+          <li><button @click="() => { handleLogout(); toggleMobileMenu(); }" class="btn btn-outline">Log Out</button></li>
         </template>
-      </div>
+      </nav>
     </header>
 
     <main>
@@ -72,7 +81,7 @@
     </main>
 
     <AiAssistPane v-if="showAiPane" :isLoggedIn="isLoggedIn" />
-    <button class="ai-fab" @click="toggleAiPane">
+    <button class="ai-fab" @click="toggleAiPane" :class="{ 'active': showAiPane }">
       <span v-if="showAiPane">✖</span>
       <span v-else>🤖</span>
     </button>
@@ -164,9 +173,15 @@ export default {
       isLoggedIn: false,
       userAvatar: 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y',
       showUserMenu: false,
-      showMobileMenu: false,
-      showAiPane: true
+      isMobileNavOpen: false,
+      showAiPane: false,
+      currentUser: null
     };
+  },
+  computed: {
+    isHomePage() {
+      return this.$route.path === '/';
+    }
   },
   methods: {
     toggleDarkMode() {
@@ -185,11 +200,21 @@ export default {
       await signOut(auth);
       this.isLoggedIn = false;
       this.showUserMenu = false;
-      this.showMobileMenu = false;
+      this.isMobileNavOpen = false;
       this.$router.push('/login');
     },
     toggleMobileMenu() {
-      this.showMobileMenu = !this.showMobileMenu;
+      this.isMobileNavOpen = !this.isMobileNavOpen;
+      const mobileNavToggle = this.$el.querySelector('.mobile-nav-toggle');
+      const menuIcon = this.$el.querySelector('.menu-icon');
+      
+      if (this.isMobileNavOpen) {
+        if (mobileNavToggle) mobileNavToggle.innerHTML = '×';
+        if (menuIcon) menuIcon.classList.add('active');
+      } else {
+        if (mobileNavToggle) mobileNavToggle.innerHTML = '☰';
+        if (menuIcon) menuIcon.classList.remove('active');
+      }
     },
     toggleAiPane() {
       this.showAiPane = !this.showAiPane;
@@ -197,6 +222,7 @@ export default {
   },
   mounted() {
     onAuthStateChanged(auth, (user) => {
+      this.currentUser = user;
       this.isLoggedIn = !!user;
       this.userAvatar = user?.photoURL || 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y';
       // Optionally, fetch more user info from Firestore here
@@ -234,20 +260,8 @@ body.dark-mode {
 }
 
 /* Navbar Styles */
-.navbar {
-  background-color: var(--white);
-  box-shadow: var(--card-shadow);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
 
-.header-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem 0;
-}
+
 
 .logo {
   display: flex;
@@ -279,36 +293,61 @@ body.dark-mode {
   color: var(--primary-dark);
 }
 
-.nav-actions {
+.nav-auth {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
-.theme-toggle {
+.theme-toggle.btn.btn-icon-only {
   background: none;
   border: none;
-  cursor: pointer;
-  font-size: 1.25rem;
+  color: var(--accent-mint);
   padding: 0.5rem;
+  font-size: 1.25rem;
+  border-radius: var(--border-radius);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.theme-toggle.btn.btn-icon-only:hover {
+  background-color: rgba(104, 225, 185, 0.1);
+  color: #58cbad;
 }
 
 .user-menu {
-  position: relative;
+  margin-right: 1rem;
   cursor: pointer;
 }
 
-.user-avatar {
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.username {
+  font-weight: 500;
+  color: var(--text-light);
+  font-size: 0.95rem;
+}
+
+.user-avatar-btn {
   width: 40px;
   height: 40px;
   border-radius: 50%;
   object-fit: cover;
+  border: 2px solid transparent;
+  transition: border-color 0.3s ease;
+}
+
+.user-menu:hover .user-avatar-btn {
+  border-color: var(--accent-mint);
 }
 
 .user-menu-dropdown {
   position: absolute;
   top: 100%;
-  right: 0;
+  right: 20vw;
   background-color: var(--white);
   border-radius: var(--border-radius);
   box-shadow: var(--card-shadow);
@@ -494,11 +533,39 @@ body.dark-mode {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  z-index: 1000;
 }
 
 .ai-fab:hover {
   transform: scale(1.1);
+}
+
+.ai-fab.active {
+  background-color: var(--accent-mint);
+  color: var(--primary-dark);
+}
+
+/* AI Pane Responsive Styles */
+@media (max-width: 920px) {
+  .ai-pane {
+    position: fixed !important;
+    top: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100vh !important;
+    max-width: none !important;
+    border-radius: 0 !important;
+    z-index: 999 !important;
+    background-color: var(--white) !important;
+    box-shadow: none !important;
+  }
+
+  .dark-mode .ai-pane {
+    background-color: #23272a !important;
+  }
 }
 
 /* Dark Mode Styles */
@@ -513,6 +580,14 @@ body.dark-mode {
 .dark-mode .nav-link:hover,
 .dark-mode .nav-link.router-link-active {
   color: var(--accent-mint);
+}
+
+.dark-mode .username {
+  color: var(--text-light);
+}
+
+.dark-mode .user-menu:hover .user-avatar-btn {
+  border-color: var(--accent-mint);
 }
 
 .dark-mode .user-menu-dropdown {
@@ -583,6 +658,29 @@ body.dark-mode {
     flex-direction: column;
     gap: 1rem;
     text-align: center;
+  }
+
+  /* AI FAB Responsive Styles */
+  .ai-fab {
+    width: 50px;
+    height: 50px;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    font-size: 1.25rem;
+  }
+
+  .ai-fab:hover {
+    transform: scale(1.05);
+  }
+}
+
+@media (max-width: 480px) {
+  .ai-fab {
+    width: 45px;
+    height: 45px;
+    bottom: 1rem;
+    right: 1rem;
+    font-size: 1.1rem;
   }
 }
 </style>
